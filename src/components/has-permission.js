@@ -10,8 +10,8 @@ export default {
         let permissions = parent.$security.permissions
         if (permissions === undefined) {
             return h('')
-        } else if (roles.indexOf(props.name) >= 0) {
-            return context.children
+        } else if (permissions.indexOf(props.name) >= 0) {
+            return children
         } else {
             return h('')
         }

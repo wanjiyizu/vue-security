@@ -11,7 +11,7 @@ export default {
         if (roles === undefined) {
             return h('')
         } else if (roles.indexOf(props.name) >= 0) {
-            return context.children
+            return children
         } else {
             return h('')
         }

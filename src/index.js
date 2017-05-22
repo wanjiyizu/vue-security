@@ -12,7 +12,7 @@ export default class SecurityManager {
 		this.verify = options.verify
 		this.loginTime = options.loginTime
 		this.interval = options.interval
-		this.initStore()
+		this.initStore(options.store)
 	}
 	initStore (store) {
 		if (typeof store === 'object') {

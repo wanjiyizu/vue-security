@@ -17,6 +17,7 @@
   "bugs": {
     "url": "https://github.com/wanjiyizu/vue-security/issues"
   },
+  "keywords": ["vue-security"],
   "homepage": "https://github.com/wanjiyizu/vue-security#readme",
   "devDependencies": {
     "babel-core": "^6.24.1",

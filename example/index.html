@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>example</title>
+  </head>
+  <body>
+    <div id="app">
+        <has-permission name="delete">
+            <a href="javascript:void(0)">删除</a>
+        </has-permission>
+        <has-permission name="update">
+            <a href="javascript:void(0)">更新</a>
+        </has-permission>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../dist/vue-security.js"></script>
+    <script>
+        Vue.use(VueSecurity)
+        let security = new VueSecurity({
+            store: {
+               state: {
+                    permissions: ['delete', 'update'],
+                    roles: ['manager']
+               }
+            }
+        })
+        let vue = new Vue({
+            el: "#app",
+            security
+        })
+    </script>
+  </body>
+</html>

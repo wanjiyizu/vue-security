@@ -20,8 +20,8 @@ var hasPermission = {
         var permissions = parent.$security.permissions;
         if (permissions === undefined) {
             return h('');
-        } else if (roles.indexOf(props.name) >= 0) {
-            return context.children;
+        } else if (permissions.indexOf(props.name) >= 0) {
+            return children;
         } else {
             return h('');
         }
@@ -45,7 +45,7 @@ var hasRole = {
         if (roles === undefined) {
             return h('');
         } else if (roles.indexOf(props.name) >= 0) {
-            return context.children;
+            return children;
         } else {
             return h('');
         }
@@ -132,7 +132,7 @@ var SecurityManager = function () {
 		this.verify = options.verify;
 		this.loginTime = options.loginTime;
 		this.interval = options.interval;
-		this.initStore();
+		this.initStore(options.store);
 	}
 
 	createClass(SecurityManager, [{
