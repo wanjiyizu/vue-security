@@ -1,49 +1,18 @@
-function installl (Vue, options) {
-	Vue.mixin({
-		beforeCreate: function () {
-			const options = this.$options
-			if (options.authorization) {
-				this.$authorization = options.authorization
-			}
-			if (options.store) {
-				this.$authorization.initStore(options.store)
-			}
-		}
-	})
-
-	Vue.component('has-permission', {
-		functional: true,
-		props: ['name'],
-		render: function (h, context) {
-			let parent = context.parent
-			const permissions = parent.$authorization.permissions
-			const roles = parent.$authorization.roles
-			if (permissions.indexOf(context.props.name) >= 0) {
-				return context.children
-			} else if (roles.indexOf(context.props.name) >= 0) {
-				return context.children
-			} else {
-				return h('')
-			}
-		}
-	})
-	Vue.prototype.$router = {
-		params: {
-			id: 'sdfsdf'
-		}
+import { install } from './install'
+export default class SecurityManager {
+	static install () {}
+	static get installed () {
+		return !!this.install.done
 	}
-}
-
-export default class Authorization {
-	static install: () => void;
-	
+	static set installed (val) {
+		this.install.done = val
+	}
 	constructor (options = {}) {
 		this.options = options
 		this.verify = options.verify
 		this.loginTime = options.loginTime
 		this.interval = options.interval
 		this.initStore()
-
 	}
 	initStore (store) {
 		if (typeof store === 'object') {
@@ -82,11 +51,10 @@ export default class Authorization {
 		}
 	}
 	reseter () {
-		console.log(typeof this.store.commit)
 		if (typeof this.store.commit === 'function') {
 			this.store.commit('logout')
 		} else {
-			this.permissions.splice(0,this.permissions.length)
+			this.permissions.splice(0, this.permissions.length)
 			this.roles.splice(0, this.roles.length)
 			this.user = Object.create(null)
 		}
@@ -111,8 +79,7 @@ export default class Authorization {
 			return
 		}
 		clear = setInterval(function () {
-			console.log('开始启动定时验证，每隔%d分钟往后台发送一次请求', interval)
-			let flag = verify.call(null)
+			let flag = verify()
 			if (flag) {
 				clearInterval(clear)
 				logout.call(_this)
@@ -132,14 +99,10 @@ export default class Authorization {
 		if (user.roles) {
 			this.addRole(user.roles)
 		}
-
 		this.rememberIdentity()
 	}
 	logout () {
-		console.log('退出')
 		this.reseter()
 	}
 }
-
-Authorization.install = install
-
+SecurityManager.install = install
